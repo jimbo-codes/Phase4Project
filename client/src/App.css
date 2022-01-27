@@ -1,3 +1,14 @@
+/*
+
+This is required so the build doesn't fail. can remove the dependencies
+if we have time later. for now will leave commented out and do styling exclusivesly with
+Tailwind.
+
+
+
+
+
+
 .App {
   text-align: center;
 }
@@ -35,4 +46,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

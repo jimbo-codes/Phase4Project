@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.create(username: "jimbo", password_digest: "asfdav")
+Usercoin.create(user_id: 1, coin_id: 1)
+puts "dun seeding"
