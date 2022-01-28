@@ -1,22 +1,27 @@
 import { Link } from 'react-router-dom';
-import React from "react";
+import React,{useState} from "react";
 
-function CryptoData({name, portCoins, setPortCoins, user, price,dodChg, mktCap, mktCapRank, id, maxSupply, volume, index, image, round}) {
+function CryptoData({name, state, portCoins, setPortCoins, user, price1 ,dodChg, mktCap, mktCapRank, id, maxSupply, volume, index, image, round}) {
 // formatting numbers.
 let tableMaxSupply
 let tableMarketCap
+// console.log(state)
+  // if(!state){
+    const [coin, setCoin] = useState('');
+    const [price, setPrice] = useState(price1);
+  // enter into here for all NON portfolios
+//   if(price){
+//     setPrice(round(price))
+//     setPrice(price.toLocaleString("en-US"))
+// // THIS CODE IS CAUSING PROBLEMS -- it causes NAN when rendering the coin for the first time.
+//   }
 
-if(price){
-  if(price === price.toLocaleString("en-us")){
-    console.log("do nothin")
-  }else{
-    price = round(price)
-    price = price.toLocaleString("en-US");
-  }
-  }
-    
-
-  // now make string.
+// You do THIS for all the portfolio ones that you've already rendered
+// }else{
+  // console.log(price)
+  // console.log(id)
+      // console.log(typeof(price))
+  // }
 
 if(mktCap){
   tableMarketCap = mktCap.toLocaleString("en-US");
@@ -33,9 +38,50 @@ if(maxSupply){
     tableMaxSupply = maxSupply.toLocaleString("en-US")
 }
 
+function handleClick2(){
+  console.log(id)
+  fetch(`http://127.0.0.1:3000/coins/${id}`)
+  .then(r=>r.json())
+  .then(e=>{
+    return fetch(`https://api.coingecko.com/api/v3/coins/${e.coin_id}`)
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    let info = { id: data.id, price: data.market_data.current_price.usd, dodChg: data.market_data.price_change_24h, market_cap: data.market_data.market_cap.usd}
+    return fetch(`http://127.0.0.1:3000/coins/${coin.id}`,{
+      method:'PATCH',
+      headers: {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json'
+     },
+     body: JSON.stringify({
+     info
+    })
+  })
+    
+  })
+  .then(r=>r.json())
+  .then(e=>{
+    // setEmail(e)
+    console.log(e)
+    setPrice(e.current_price)
+    dodChg = e.price_chg
+    tableMarketCap = e.market_cap
+  })
+// price
+// 
+}
+
 function handleClick(e){
+  // console.log(e)
     if(portCoins.filter(e=> e.coin_name === name).length === 0){
       let coin = {id: id, coin_image: image, coin_name: name, current_price: Number(price), price_chg: Number(dodChg), market_cap: mktCap, max_supply: maxSupply, volume: volume, market_rank: Number(mktCapRank)}
+      if(isNaN(price)){
+        fetch(`http://127.0.0.1:3000/coins/${coin.id}`)
+        .then(r=>r.json())
+        .then(e => {coin.price = e.current_price;console.log(e);console.log(coin.price)})
+      }
+      
       setPortCoins([...portCoins,coin])
       fetch('http://127.0.0.1:3000/usercoins',{
                method:'POST',
@@ -49,7 +95,7 @@ function handleClick(e){
               })
       })
       .then(r=>r.json())
-      .then(d=>{ coin["current_price"] = d.current_price})
+      .then(d=>{ })
     }else{
     setPortCoins(portCoins.filter(c=>c.coin_name !== name))
       fetch(`http://127.0.0.1:3000/usercoins/${id}`,{
@@ -63,7 +109,6 @@ function handleClick(e){
         .then(d=>console.log(d))
     }
 }
-
 return (      
     <tr className="hover:bg-white">
       <td className="px-1 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -81,14 +126,15 @@ return (
       </td>
       <td className="px-1 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index?`${index}.`:""}</td>
       <td className="px-0 py-4 whitespace-nowrap text-sm font-medium text-blue-600 underline"><img className="float-left w-6 pr-1" src={image} alt={name}/><Link to={`/app/${id}`} onClick={()=>{window.scrollTo(0, 0)}}>{name}</Link></td>
-      <td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${price}</td>
+      <td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${coin?`${price}heyo`:price}</td>
       {/* conditional formatting based on the band of price, ex how many decimals to show. */}
       {dodChg<0?<td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style={{color: "red",}}> {dodChg}%</td>:<td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style={{color: 'green'}}>{dodChg}%</td>}
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${tableMarketCap}</td>
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-left text-gray-900">{maxSupply?tableMaxSupply:"N/A"}</td>
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${volume}</td>
       <td className="px-4 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-900">{mktCapRank}</td>
-      <td><Link to={`/app/${id}`} onClick={()=>{window.scrollTo(0, 0)}} className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Inspect</Link></td>
+      <td><button onClick={handleClick2} className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update</button></td>
+    {/* onClick={()=>{window.scrollTo(0, 0)}} */}
     </tr>
   );
 }

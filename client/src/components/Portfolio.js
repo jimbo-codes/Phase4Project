@@ -41,7 +41,6 @@ function Portfolio({round, portCoins, setPortCoins, name, user }) {
                         </thead>
                             <tbody>
                                 {portCoins.map((coin)=>{    
-                                    console.log(coin)
                                     pindex++
                                     return <CryptoData
                                     setPortCoins={setPortCoins}
@@ -52,13 +51,14 @@ function Portfolio({round, portCoins, setPortCoins, name, user }) {
                                         image={coin.coin_image}
                                         id={coin.id}
                                         name={coin.coin_name}
-                                        price={coin.current_price}
+                                        price1={coin.current_price}
                                         dodChg={coin.price_chg}
                                         mktCap={coin.market_cap}
                                         mktCapRank={coin.market_rank}
                                         maxSupply={coin.max_supply}
                                         volume={coin.volume}
                                         index={pindex}
+                                        state={true}
                                     />
                                 })}
                             </tbody>

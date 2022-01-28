@@ -30,9 +30,10 @@ let index=0;
                             <tbody>
                                 {table.map((coin)=>{
                                     index++
-                                    if(coin.current_price){
-                                        coin.current_price = round(coin.current_price)
-                                    }
+                                    // let price = coin.current_price
+                                    
+                                    // price = price.toLocaleString("en-US");
+
                                     return <CryptoData
                                         user={user}
                                         setPortCoins={setPortCoins}
@@ -42,13 +43,14 @@ let index=0;
                                         image={coin.coin_image}
                                         id={coin.id}
                                         name={coin.coin_name}
-                                        price={coin.current_price}
+                                        price1={coin.current_price}
                                         dodChg={coin.price_chg}
                                         mktCap={coin.market_cap}
                                         mktCapRank={coin.market_rank}
                                         maxSupply={coin.max_supply}
                                         volume={coin.volume}
                                         index={index}
+                                        state={false}
                                     />
                                 })}
                             </tbody>

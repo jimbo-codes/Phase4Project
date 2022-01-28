@@ -36,9 +36,10 @@ class CoinsController < ApplicationController
       # debugger
   end
 
-  # GET /coins/1
+
   def show
-    render json: @coin
+    coin = Coin.find_by_id(params[:id])
+    render json: coin, status: 200
   end
 
   # POST /coins
@@ -54,15 +55,18 @@ class CoinsController < ApplicationController
 
   # PATCH/PUT /coins/1
   def update
+    coin = Coin.find_by_coin_id params[:info][:id]
+    dod = params[:info][:dodChg].to_f / coin.current_price
+    coin['market_cap'] = params[:info][:market_cap]
+    coin['current_price'] = params[:info][:price]
+    coin['price_chg'] = dod
+    coin.save
+    render json: coin, status: 200
+    # Update Price, market cap, and 24h Change
 
-    # BUILD THIS OUT to update if data is stale
-
-    if @coin.update(coin_params)
-      render json: @coin
-    else
-      render json: @coin.errors, status: :unprocessable_entity
+        # Make it update with the "refresh" button in the table
     end
-  end
+
 
   def destroy
 

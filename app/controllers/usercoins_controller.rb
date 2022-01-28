@@ -11,7 +11,7 @@ class UsercoinsController < ApplicationController
         new_port.save
         render json: coin, status: 200
     end
-
+    
     def destroy
     del = Coin.find_by_id params[:id]
     delete = Usercoin.find_by coin_id: del.id
