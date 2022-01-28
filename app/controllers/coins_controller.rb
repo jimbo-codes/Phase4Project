@@ -71,6 +71,7 @@ class CoinsController < ApplicationController
   def destroy
     coin = Coin.find_by_id params[:id]
     coin.destroy
+    render json: params[:id]
   end
 
   private

@@ -38,6 +38,14 @@ useEffect(() => {
 },[])
 
 useEffect(() => {
+  fetch("http://127.0.0.1:3000/me").then((response) => {
+    if (response.ok) {
+      response.json().then((user) => {setUser(user);console.log(user)});
+    }
+  });
+}, []);
+
+useEffect(() => {
   fetch('https://api.coingecko.com/api/v3/global')
   .then(r=>r.json())
   .then(data=> {setGlobal(data)})

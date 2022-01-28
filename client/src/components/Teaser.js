@@ -1,5 +1,9 @@
 function Teaser({searchContent, setSearch}) {
-
+function handleClick(){
+fetch('http://127.0.0.1:3000/test')
+.then(res=>res.json())
+.then(console.log('clicked'))
+}
     return(
         <div>
         
@@ -8,13 +12,13 @@ function Teaser({searchContent, setSearch}) {
 {/* need to fix up button, and add the text at the top (do pixel font if you can.) */}
 
     <div className="grid place-items-center align-middle" >
-    <img className="float-left justify-center lg h-32 w-auto"
+    <img onClick={handleClick} className="float-left justify-center lg h-32 w-auto"
                     src="https://i.ibb.co/7Js60Ym/Dcf.png"
                     alt="Degen Coin Flip"/>
         <p className="text-8xl  mx-4 float-left justify-center text-center ">+</p>
                     {/* Add a PLUS sign, then the Matic emblem */}
     <img className="float-left mt-4" src="https://i.ibb.co/Mp2DKwy/polyg2.jpg" alt="polyg2" border="0"/>
-        <button className="mt-8 px-4 py-2 border border-transparent text-l font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" tabindex="0">Select Wallet</button>
+        <button className="mt-8 px-4 py-2 border border-transparent text-l font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Select Wallet</button>
     </div>
         </div>
 

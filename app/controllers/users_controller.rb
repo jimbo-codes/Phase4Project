@@ -15,6 +15,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    user = User.find_by(id: session[:user_id])
+    if user
+      render json: user
+    else
+      render json: { error: "Not authorized" }, status: :unauthorized
+    end
+  end
+
+  def test
+    if cookies[:click]
+      cookies[:click] +=1
+    else
+      cookies[:click] = 0
+    end
+    debugger
+    # cookies[:click] = cookies[:click].to_i +1
+    # session[:click] +=1
+    # debugger
+
+  end
   private
   def user_params
     params.permit(:username, :password)
