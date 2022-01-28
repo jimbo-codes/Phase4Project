@@ -38,9 +38,9 @@ useEffect(() => {
 },[])
 
 useEffect(() => {
-  fetch("http://127.0.0.1:3000/me").then((response) => {
+  fetch("/me").then((response) => {
     if (response.ok) {
-      response.json().then((user) => {setUser(user);console.log(user)});
+      response.json().then((user) => {setUser(user);console.log(user);setAuth(true)});
     }
   });
 }, []);

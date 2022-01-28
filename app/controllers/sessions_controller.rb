@@ -13,13 +13,8 @@ class SessionsController < ApplicationController
     end
 
     def test
-        if session[:click]
-          session[:click] +=1
-        else
-          session[:click] = 0
-        end
-        puts session[:click]
-        # cookies[:click] = cookies[:click].to_i +1
+          cookies[:click] ||= 0
+        cookies[:click] = cookies[:click].to_i +1
         # session[:click] +=1
         # debugger
         render json: {note: "clicked"}

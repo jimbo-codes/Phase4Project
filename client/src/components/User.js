@@ -12,7 +12,7 @@ export default function User({setAuth,setUser,setName,setEmail,auth,name,email,s
 }
     function handleClick(e){
       e.preventDefault()
-       fetch('http://127.0.0.1:3000/login',{
+       fetch('/login',{
              method:'POST',
              headers: {
               'Accept': 'application/json',

@@ -1,12 +1,11 @@
 function Teaser({searchContent, setSearch}) {
 function handleClick(){
-fetch('http://127.0.0.1:3000/test')
+fetch('/test')
 .then(res=>res.json())
 .then(console.log('clicked'))
 }
     return(
         <div>
-        
         <h1 className="font-header text-center mt-8 mb-8 text-4xl font-mono">Double or nothing... but hold the house fees</h1>
 {/* Setup degen coin flip style teaser */}
 {/* need to fix up button, and add the text at the top (do pixel font if you can.) */}
