@@ -8,6 +8,7 @@ import User from './User';
 import CryptoPage from './CryptoPage';
 import Global from './Global';
 import CreateUser from './CreateUser';
+import Teaser from './Teaser'
 
 function App() {
 const [auth, setAuth] = useState(false);
@@ -71,7 +72,9 @@ return (
       <Route path="user/*" element={<User setLog={setLog} setUser={setUser}log={log} name={name} auth={auth} setName={setName} email={email} setEmail={setEmail} setAuth={setAuth}/>}/>
 
       {/* This is the about page */}
-      <Route path='about' element={<About/>}/>      
+      <Route path='about' element={<About/>}/>
+
+      <Route path='teaser' element={<Teaser/>}/>    
       
       {/* This is our "homepage"*/}
 
