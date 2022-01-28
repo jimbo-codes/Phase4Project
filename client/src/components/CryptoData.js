@@ -109,6 +109,16 @@ function handleClick(e){
         .then(d=>console.log(d))
     }
 }
+function handledelete(){
+  // console.log(id)
+  fetch(`http://127.0.0.1:3000/coins/${id}`,{
+    method:'DELETE',
+    headers: {
+     'Accept': 'application/json',
+     'Content-Type': 'application/json'
+   }
+})
+}
 return (      
     <tr className="hover:bg-white">
       <td className="px-1 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -126,13 +136,13 @@ return (
       </td>
       <td className="px-1 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{index?`${index}.`:""}</td>
       <td className="px-0 py-4 whitespace-nowrap text-sm font-medium text-blue-600 underline"><img className="float-left w-6 pr-1" src={image} alt={name}/><Link to={`/app/${id}`} onClick={()=>{window.scrollTo(0, 0)}}>{name}</Link></td>
-      <td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${coin?`${price}heyo`:price}</td>
+      <td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${price}</td>
       {/* conditional formatting based on the band of price, ex how many decimals to show. */}
       {dodChg<0?<td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style={{color: "red",}}> {dodChg}%</td>:<td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900" style={{color: 'green'}}>{dodChg}%</td>}
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${tableMarketCap}</td>
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-left text-gray-900">{maxSupply?tableMaxSupply:"N/A"}</td>
       <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${volume}</td>
-      <td className="px-4 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-900">{mktCapRank}</td>
+      <td className="px-4 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-900" onClick={handledelete}>{mktCapRank}</td>
       <td><button onClick={handleClick2} className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update</button></td>
     {/* onClick={()=>{window.scrollTo(0, 0)}} */}
     </tr>

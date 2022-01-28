@@ -69,9 +69,8 @@ class CoinsController < ApplicationController
 
 
   def destroy
-
-    # SET THE INSPECT button to "Delete" and fire off a delete here
-    @coin.destroy
+    coin = Coin.find_by_id params[:id]
+    coin.destroy
   end
 
   private
